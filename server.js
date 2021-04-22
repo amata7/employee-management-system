@@ -21,50 +21,6 @@ connection.connect((err) => {
     start();
   });
 
-const readDepartments = () => {
-  // console.log('Selecting all departments...\n');
-  connection.query('SELECT * FROM department', (err, res) => {
-    if (err) throw err;
-    // Log all results of the SELECT statement
-    console.log(res);
-    
-  });
-};
-
-const readRoles = () => {
-  // console.log('Selecting all roles...\n');
-  connection.query('SELECT * FROM role', (err, res) => {
-    if (err) throw err;
-    // Log all results of the SELECT statement
-    console.log(res);
-    
-  });
-};
-
-const readEmployees = () => {
-  // console.log('Selecting all employees...\n');
-  connection.query('SELECT * FROM employee', (err, res) => {
-    if (err) throw err;
-    // Log all results of the SELECT statement
-    console.log(res);
-    
-  });
-};
-
-// const createDepartment = () => {
-//   console.log('Inserting a new department...\n');
-//   const query = connection.query(
-//     'INSERT INTO department SET ?',
-//     {
-//       id: 2,
-//       name: 'Humannnn Resources',
-//     },
-//     (err, res) => {
-//       if (err) throw err;
-//     }
-//   );
-// };
-
 const createDepartment = () => {
   inquirer
     .prompt([
@@ -75,7 +31,6 @@ const createDepartment = () => {
       },
     ])
     .then((answers) => {
-      console.log(answers.name);
       connection.query(
         'INSERT INTO department SET ?',
         {
@@ -90,6 +45,96 @@ const createDepartment = () => {
     });
 };
 
+const readDepartments = () => {
+  connection.query('SELECT * FROM department', (err, res) => {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.log(res);
+    quit();
+  });
+};
+
+const createEmployee = () => {
+  inquirer
+    .prompt([
+      {
+        name: 'first_name',
+        type: 'input',
+        message: "Enter employee's first name:",
+      },
+      {
+        name: 'last_name',
+        type: 'input',
+        message: "Enter employee's last name:",
+      },
+      
+    ])
+    .then((answers) => {
+      connection.query(
+        'INSERT INTO employee SET ?',
+        {
+          first_name: answers.first_name,
+          last_name: answers.last_name,
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log('---Added ' + answers.first_name + ' ' + answers.last_name + ' to employees table---');
+          start();
+        }
+      );
+    });
+};
+
+const readEmployees = () => {
+  // console.log('Selecting all employees...\n');
+  connection.query('SELECT * FROM employee', (err, res) => {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.log(res);
+    quit();
+  });
+};
+
+const createRole = () => {
+  inquirer
+    .prompt([
+      {
+        name: 'title',
+        type: 'input',
+        message: "Enter role name:",
+      },
+      {
+        name: 'salary',
+        type: 'input',
+        message: "Enter role salary:",
+      },
+    ])
+    .then((answers) => {
+      connection.query(
+        'INSERT INTO role SET ?',
+        {
+          title: answers.title,
+          salary: answers.salary,
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log('---Added ' + answers.title + ' to roles table---');
+          start();
+        }
+      );
+    });
+};
+
+const readRoles = () => {
+  // console.log('Selecting all roles...\n');
+  connection.query('SELECT * FROM role', (err, res) => {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.log(res);
+    quit();
+  });
+};
+
 const start = () => {
   inquirer
     .prompt([
@@ -97,7 +142,7 @@ const start = () => {
         name: 'menu',
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['Create a new department', 'View Departments' , 'Option 3']
+        choices: ['Create a new department', 'View Departments' , 'Create a new employee', 'View Employees', 'Create a new role', 'View roles']
       },
     ])
     .then((answers) => {
@@ -110,6 +155,22 @@ const start = () => {
 
         case 'View Departments':
           readDepartments();
+          break;
+
+        case 'Create a new role':
+          createRole();
+          break;
+
+        case 'View roles':
+          readRoles();
+          break;
+
+        case 'Create a new employee':
+          createEmployee();
+          break;
+
+        case 'View Employees':
+          readEmployees();
           break;
 
 
