@@ -1,7 +1,7 @@
 {
   "name": "employee-management-system",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Description Every good README has a description of what goal the project accomplishes. The following section describes what this project does: > This project allows the user to acess a database which stores values for departments, roles, and employees in a workplace.",
   "main": "server.js",
   "dependencies": {
     "console.table": "^0.10.0",

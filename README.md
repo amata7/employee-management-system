@@ -4,6 +4,10 @@
 Every good README has a description of what goal the project accomplishes. The following section describes what this project does:
 > This project allows the user to acess a database which stores values for departments, roles, and employees in a workplace.
 
+## Video Link
+[Click here!](https://drive.google.com/file/d/1lxiMvwCzKb_Ss5drVTv1SJtzuwjpaa1V/view?usp=sharing)
+
+
 ## Table of Contents 
 
 [Installation](#install)
