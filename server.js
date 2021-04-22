@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log('---You are listening on PORT 3306---');
+    console.table('---You are listening on PORT 3306---');
     start();
   });
 
@@ -38,7 +38,7 @@ const createDepartment = () => {
         },
         (err, res) => {
           if (err) throw err;
-          console.log('---Added ' + answers.name + ' to departments table---')
+          console.table('---Added ' + answers.name + ' to departments table---')
           start();
         }
       );
@@ -49,8 +49,8 @@ const readDepartments = () => {
   connection.query('SELECT * FROM department', (err, res) => {
     if (err) throw err;
     // Log all results of the SELECT statement
-    console.log(res);
-    quit();
+    console.table(res);
+    start();
   });
 };
 
@@ -78,7 +78,7 @@ const createEmployee = () => {
         },
         (err, res) => {
           if (err) throw err;
-          console.log('---Added ' + answers.first_name + ' ' + answers.last_name + ' to employees table---');
+          console.table('---Added ' + answers.first_name + ' ' + answers.last_name + ' to employees table---');
           start();
         }
       );
@@ -86,18 +86,18 @@ const createEmployee = () => {
 };
 
 const readEmployees = () => {
-  // console.log('Selecting all employees...\n');
+  // console.table('Selecting all employees...\n');
   connection.query('SELECT * FROM employee', (err, res) => {
     if (err) throw err;
     // Log all results of the SELECT statement
-    console.log(res);
-    quit();
+    console.table(res);
+    start();
   });
 };
 
 const createRole = () => {
   inquirer
-    .prompt([
+  .prompt([
       {
         name: 'title',
         type: 'input',
@@ -118,7 +118,7 @@ const createRole = () => {
         },
         (err, res) => {
           if (err) throw err;
-          console.log('---Added ' + answers.title + ' to roles table---');
+          console.table('---Added ' + answers.title + ' to roles table---');
           start();
         }
       );
@@ -126,29 +126,74 @@ const createRole = () => {
 };
 
 const readRoles = () => {
-  // console.log('Selecting all roles...\n');
   connection.query('SELECT * FROM role', (err, res) => {
     if (err) throw err;
     // Log all results of the SELECT statement
-    console.log(res);
-    quit();
+    console.table(res);
+    start();
   });
 };
 
-const start = () => {
-  inquirer
+// const updateDepartment = () => {
+//   connection.query('SELECT * FROM department', (err, department) => {
+//     if (err) throw err;
+//     inquirer
+//       .prompt([
+//         {
+//           type: 'list',
+//           name: 'dep',
+//           message: 'Select a department to add roles to',
+//           choices: department.map((dep) => ({
+//             value: dep,
+//             name: `${dep.id} | ${dep.name}`,
+//           })),
+//         },
+//         // {
+//         //   name: 'title',
+//         //   type: 'input',
+//         //   message: 'Enter a song title:',
+//         //   default: (answers) => answers.song.title,
+//         // },
+//       ])
+//       .then((answers) => {
+//         console.log(`${department}`);
+
+//         // connection.query(
+//         //   'UPDATE department SET ? WHERE ?',
+//         //   [
+//         //     {
+//         //       title: answers.title,
+//         //       artist: answers.artist,
+//         //       genre: answers.genre,
+//         //     },
+//         //     {
+//         //       department: answers.song.department,
+//         //     },
+//         //   ],
+//         //   (updateError, updateRes) => {
+//         //     if (updateError) throw updateError;
+//         //     console.log(`${updateRes.affectedRows} products updated!\n`);
+//         //     start();
+//         //   }
+//         // );
+//       });
+//   });
+// };
+  
+  const start = () => {
+    inquirer
     .prompt([
       {
         name: 'menu',
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['Create a new department', 'View Departments' , 'Create a new employee', 'View Employees', 'Create a new role', 'View roles']
+        choices: ['Create a new department', 'View Departments' , 'Create a new employee', 'View Employees', 'Create a new role', 'View roles', new inquirer.Separator() , 'Im done', new inquirer.Separator()]
       },
     ])
     .then((answers) => {
       
       switch (answers.menu) {
-
+        
         case 'Create a new department':
           createDepartment();
           break;
@@ -173,6 +218,9 @@ const start = () => {
           readEmployees();
           break;
 
+        case 'Add/Update a departments roles':
+          updateDepartment();
+          break;
 
         default:
           quit();
@@ -184,6 +232,6 @@ const start = () => {
 
 const quit = () => {
   connection.end();
-  console.log('Good bye!');
+  console.table('Good bye!');
   process.exit();
 };
