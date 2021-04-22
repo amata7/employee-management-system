@@ -1,0 +1,23 @@
+[
+  {
+      "id": "1",
+      "first_name": "Rhett",
+      "last_name": "McLaughlin",
+      "role_id": "1",
+      "manager_id": "1"
+  },
+  {
+      "id": "2",
+      "first_name": "Rhett",
+      "last_name": "Neal",
+      "role_id": "2",
+      "manager_id": "1"
+  },
+  {
+      "id": "3",
+      "first_name": "Ben",
+      "last_name": "Greenwood",
+      "role_id": "3",
+      "manager_id": "1"
+  }
+]
