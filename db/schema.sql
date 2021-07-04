@@ -30,14 +30,16 @@ CREATE TABLE employee (
   FOREIGN KEY (role_id)
   REFERENCES role(id)
 	ON UPDATE CASCADE
-    ON DELETE CASCADE,
-  CONSTRAINT fk_manager
-  FOREIGN KEY (manager_id)
-  REFERENCES employee(manager_id)
-	ON UPDATE CASCADE
     ON DELETE CASCADE
 );
 
-SELECT * FROM department;
-SELECT * FROM role;
-SELECT * FROM employee;
+ALTER TABLE employee
+	ADD UNIQUE KEY (id),
+	ADD FOREIGN KEY (manager_id)
+    REFERENCES employee(id)
+    ;
+
+
+-- SELECT * FROM department;
+-- SELECT * FROM role;
+-- SELECT * FROM employee;
