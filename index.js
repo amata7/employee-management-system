@@ -1,5 +1,4 @@
 const connection = require("./server");
-const mysql = require("mysql");
 const inquirer = require("inquirer");
 const Department = require("./models/department");
 const Employee = require("./models/employee");
