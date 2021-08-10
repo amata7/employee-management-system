@@ -1,8 +1,5 @@
 const connection = require("./server");
 const inquirer = require("inquirer");
-const Department = require("./models/department");
-const Employee = require("./models/employee");
-const Role = require("./models/role");
 
 const createDepartment = () => {
   inquirer
@@ -91,38 +88,33 @@ const updateEmpRoles = () => {
     for (let i = 0; i < res.length; i++) {
       empList.push(res[i].first_name + " " + res[i].last_name);
     }
-    inquirer
-      .prompt([
-        {
-          name: "selectEmp",
-          type: "list",
-          message: "Choose which employee's role to update.",
-          choices: empList,
-        },
-      ])
-      .then((answers) => {
-        let roleList = [];
-        connection.query("SELECT * FROM role", (err, res) => {
-          if (err) throw err;
-          for (let i = 0; i < res.length; i++) {
-            roleList.push(res[i].title);
-          }
-          console.log(answers);
-          inquirer.prompt([
-            {
-              name: "selectRole",
-              type: "list",
-              message:
-                "Choose which role to assign to " + answers.selectEmp + ".",
-              choices: roleList,
-            },
-          ]);
-        });
-      });
+    let roleList = [];
+    connection.query("SELECT * FROM role", (err, res) => {
+      if (err) throw err;
+      for (let i = 0; i < res.length; i++) {
+        roleList.push(res[i].title);
+      }
+      inquirer
+        .prompt([
+          {
+            name: "selectEmp",
+            type: "list",
+            message: "Choose which employee's role to update.",
+            choices: empList,
+          },
+          {
+            name: "selectRole",
+            type: "list",
+            message: "Choose which role to assign to this employee.",
+            choices: roleList,
+          },
+        ])
+        .then((answers) => {});
+    });
   });
 };
 
-// updateEmpRoles();
+updateEmpRoles();
 
 const createRole = () => {
   inquirer
@@ -226,4 +218,4 @@ const quit = () => {
   process.exit();
 };
 
-init();
+// init();
