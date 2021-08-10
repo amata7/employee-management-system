@@ -85,6 +85,26 @@ const readEmployees = () => {
   });
 };
 
+const updateEmpRoles = () => {
+  let empList = [];
+  connection.query("SELECT * FROM employee", (err, res) => {
+    for (let i = 0; i < res.length; i++) {
+      empList.push(res[i].first_name + " " + res[i].last_name);
+    }
+    console.log(empList);
+    inquirer.prompt([
+      {
+        name: "selectEmp",
+        type: "list",
+        message: "Choose which employee's role to update.",
+        choices: empList,
+      },
+    ]);
+  });
+};
+
+updateEmpRoles();
+
 const createRole = () => {
   inquirer
     .prompt([
@@ -187,4 +207,4 @@ const quit = () => {
   process.exit();
 };
 
-init();
+// init();
