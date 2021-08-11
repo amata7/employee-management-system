@@ -11,16 +11,16 @@ CREATE TABLE department (
 CREATE TABLE role (
   id INT PRIMARY KEY auto_increment,
   title VARCHAR(30),
-  salary DECIMAL,
-  department_id INT
+  salary DECIMAL
+  -- department_id INT
 );
 
 CREATE TABLE employee (
   id INT PRIMARY KEY auto_increment,
   first_name VARCHAR(30),
   last_name VARCHAR(30),
-  role_title VARCHAR(30),
-  manager_id INT
+  role_title VARCHAR(30)
+  -- manager_id INT
 );
 
 
