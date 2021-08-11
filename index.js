@@ -109,12 +109,17 @@ const updateEmpRoles = () => {
             choices: roleList,
           },
         ])
-        .then((answers) => {});
+        .then((answers) => {
+          const lnArr = answers.selectEmp.split(" ");
+          connection.query(
+            "UPDATE employee SET role_title = ? WHERE last_name = ?",
+            [answers.selectRole, lnArr[1]]
+          );
+          init();
+        });
     });
   });
 };
-
-updateEmpRoles();
 
 const createRole = () => {
   inquirer
@@ -167,6 +172,7 @@ const init = () => {
           "View Departments",
           "Create a new employee",
           "View Employees",
+          "Update an employee's role",
           "Create a new role",
           "View roles",
           new inquirer.Separator(),
@@ -205,6 +211,10 @@ const init = () => {
           updateDepartment();
           break;
 
+        case "Update an employee's role":
+          updateEmpRoles();
+          break;
+
         default:
           quit();
           break;
@@ -218,4 +228,4 @@ const quit = () => {
   process.exit();
 };
 
-// init();
+init();
